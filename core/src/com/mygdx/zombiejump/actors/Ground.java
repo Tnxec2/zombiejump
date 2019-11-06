@@ -14,14 +14,13 @@ public class Ground extends BaseActor {
         loadTexture("ground.png");
         setBoundaryRectangle();
 
-        setSpeed(50);
-        setMotionAngle(180);
+        setSpeed(200);
     }
    
     @Override
     public void act(float dt) {
         super.act(dt);
 
-        applyPhsysic(dt);
+        setX(getX() - dt * getSpeed());
     }
 }

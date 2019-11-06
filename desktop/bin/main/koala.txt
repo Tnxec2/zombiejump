@@ -1,0 +1,26 @@
+koala.png
+size: 108, 52
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+walk-1
+  rotate: false
+  xy: 0, 0
+  size: 36, 52
+  orig: 36, 52
+  offset: 0, 0
+  index: -1
+walk-2
+  rotate: false
+  xy: 36, 0
+  size: 36, 52
+  orig: 36, 52
+  offset: 0, 0
+  index: -1
+walk-3
+  rotate: false
+  xy: 72, 0
+  size: 36, 52
+  orig: 36, 52
+  offset: 0, 0
+  index: -1

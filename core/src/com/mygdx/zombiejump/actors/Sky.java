@@ -13,15 +13,13 @@ public class Sky extends BaseActor {
         loadTexture("sky.png");
 
         setSpeed(100);
-        setMotionAngle(180);
-
     }
 
     @Override
     public void act(float dt) {
         super.act(dt);
 
-        applyPhsysic(dt);
+        setX(getX() - dt * getSpeed());
     }
 
     

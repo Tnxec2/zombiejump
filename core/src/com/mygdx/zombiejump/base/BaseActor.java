@@ -40,8 +40,8 @@ public class BaseActor extends Group {
     private float elapsedTime;
     private boolean animationPaused;
 
-    private Vector2 velocityVec; 
-    private Vector2 accelerationVec; 
+    protected Vector2 velocityVec; 
+    protected Vector2 accelerationVec; 
     private float acceleration; 
 
     private float maxSpeed;
@@ -532,6 +532,22 @@ public class BaseActor extends Group {
         // check top edge
         if ( getY() + getHeight() > worldBounds.height )
             setY(worldBounds.height-getHeight());
+    }
+
+    public boolean isOutOfWorld() {
+        // check left edge
+        if (getX() < 0 ) 
+            return true;
+        // check right edge
+        if (getX() + getWidth() > worldBounds.width)
+            return true;
+        // check bottom edge
+        if ( getY() < 0 )
+            return true;
+        // check top edge
+        if ( getY() + getHeight() > worldBounds.height )
+            return true;
+        return false;
     }
 
     /**
