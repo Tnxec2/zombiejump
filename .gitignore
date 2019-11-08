@@ -1,3 +1,6 @@
+desktop/bin/
+desktop/build/
+
 ## Java
 
 *.class
