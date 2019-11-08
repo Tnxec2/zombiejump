@@ -141,7 +141,7 @@ public class LevelScreen extends BaseScreen {
         System.out.print( "Ende: " + ( lastHome.getX() + lastHome.getWidth() ) + ", Breite: " + spawnWidthHome + ", Anfang: ");
         lastHome = new Home(lastHome.getX() + lastHome.getWidth() + spawnWidthHome, 0, mainStage);
         System.out.println( lastHome.getX() );
-        spawnWidthHome = MathUtils.random(50, 100);
+        spawnWidthHome = MathUtils.random(100, 200);
     }
 
     private void gameOver() {

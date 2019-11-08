@@ -10,13 +10,17 @@ import com.mygdx.zombiejump.base.BaseActor;
 public class Home extends BaseActor {
 
     private Props[] typs = { 
-        new Props(true, "home1.png"), 
+        new Props(true, false,"home1.png"),
         new Props(false, true, "home2.png"),
-        new Props("home3.png"), 
-        new Props("home4.png"), 
-        new Props("home5.png"), 
-        new Props(true, "home6.png"), 
-        new Props("home7.png")
+        new Props(false, false, "home3.png"),
+        new Props(false, false,"home4.png"),
+        new Props(false, false, "home5.png"),
+        new Props(true,  false, "home6.png"),
+        new Props(false, false, "home7.png"),
+        new Props(  true,false,"home8.png"),
+        new Props(false, false, "home9.png"),
+        new Props(false, true,"home10.png"),
+        new Props(false, false, "home11.png")
     };
 
     public boolean isLong;
@@ -55,18 +59,6 @@ public class Home extends BaseActor {
         boolean isLong;
         boolean isHeight;
         String fileName;
-
-        public Props(String fileName) {
-            isLong = false;
-            isHeight = false;
-            this.fileName = fileName;
-        }
-
-        public Props(boolean isLong, String fileName) {
-            this.isLong = isLong;
-            this.isHeight = false;
-            this.fileName = fileName;
-        }
 
         public Props(boolean isLong, boolean isHeight, String fileName) {
             this.isLong = isLong;
