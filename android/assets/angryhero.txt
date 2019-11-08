@@ -1,0 +1,68 @@
+angryhero.png
+size: 373, 67
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+angryhero-001-64
+  rotate: false
+  xy: 1, 1
+  size: 41, 64
+  orig: 41, 64
+  offset: 0, 0
+  index: -1
+angryhero-002-64
+  rotate: false
+  xy: 44, 1
+  size: 39, 64
+  orig: 39, 64
+  offset: 0, 0
+  index: -1
+angryhero-003-64
+  rotate: false
+  xy: 85, 1
+  size: 39, 64
+  orig: 39, 64
+  offset: 0, 0
+  index: -1
+angryhero-004-64
+  rotate: false
+  xy: 126, 1
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+angryhero-005-64
+  rotate: false
+  xy: 167, 1
+  size: 39, 64
+  orig: 39, 64
+  offset: 0, 0
+  index: -1
+angryhero-006-64
+  rotate: false
+  xy: 208, 1
+  size: 40, 63
+  orig: 40, 63
+  offset: 0, 0
+  index: -1
+angryhero-007-64
+  rotate: false
+  xy: 250, 1
+  size: 39, 63
+  orig: 39, 63
+  offset: 0, 0
+  index: -1
+angryhero-008-64
+  rotate: false
+  xy: 291, 1
+  size: 39, 63
+  orig: 39, 63
+  offset: 0, 0
+  index: -1
+angryhero-009-64
+  rotate: false
+  xy: 332, 1
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1

@@ -10,7 +10,7 @@ public class Sky extends BaseActor {
 
     public Sky(float x, float y, Stage s) {
         super(x, y, s);
-        loadTexture("sky.png");
+        loadTexture("sky2.png");
 
         setSpeed(100);
     }

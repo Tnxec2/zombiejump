@@ -35,7 +35,7 @@ public class LevelScreen extends BaseScreen {
     private static final int heroX = 200;
 
     private Home lastHome;
-    private int spawnWidthHome = 200;
+    private int spawnWidthHome;
 
     private Label zombieLabel;
 
@@ -51,10 +51,11 @@ public class LevelScreen extends BaseScreen {
         sky1 = new Sky(0, 0, mainStage);
         sky2 = new Sky(sky1.getWidth(), 0, mainStage);
 
-        lastHome = new Home(100, 0, mainStage);
+        lastHome = new Home(100, 0, mainStage, 0);
         hero = new Hero(heroX, lastHome.getHeight(), mainStage);
 
         spawnHome();
+        spawnWidthHome = 200;
 
         zombieLabel = new Label("Zombies passt:", BaseUI.labelStyle);
         zombieLabel.setColor(Color.CYAN);
@@ -66,7 +67,7 @@ public class LevelScreen extends BaseScreen {
         music = Gdx.audio.newMusic(Gdx.files.internal("Shanghai_Action.mp3"));
         jump = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
 
-        audioVolume = 1.00f;
+        audioVolume = -1.00f;
         music.setLooping(true);
         music.setVolume(audioVolume);
         music.play();
@@ -137,9 +138,10 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void spawnHome() {
-        int rand = MathUtils.random(4);
-        lastHome = new Home(lastHome.getX() + lastHome.getWidth() + spawnWidthHome, 0, mainStage, rand);
-        spawnWidthHome = MathUtils.random(100, 220);
+        System.out.print( "Ende: " + ( lastHome.getX() + lastHome.getWidth() ) + ", Breite: " + spawnWidthHome + ", Anfang: ");
+        lastHome = new Home(lastHome.getX() + lastHome.getWidth() + spawnWidthHome, 0, mainStage);
+        System.out.println( lastHome.getX() );
+        spawnWidthHome = MathUtils.random(50, 100);
     }
 
     private void gameOver() {

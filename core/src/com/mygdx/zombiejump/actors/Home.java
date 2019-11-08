@@ -1,5 +1,6 @@
 package com.mygdx.zombiejump.actors;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.zombiejump.base.BaseActor;
 
@@ -23,22 +24,21 @@ public class Home extends BaseActor {
 
     public Home(float x, float y, Stage s ) {
         super(x, y, s);
-        
-        loadTexture(typs[0].fileName);
-        isLong = typs[0].isLong;
-        isHight = typs[0].isHeight;
-        setBoundaryRectangle();
 
-        setSpeed(200);
+        setHome(x, MathUtils.random(typs.length-1));
     }
 
     public Home(float x, float y, Stage s, int typ ) {
         super(x, y, s);
         
+        setHome(x, typ);
+    }
+
+    private  void setHome(float x, int typ) {
         loadTexture(typs[typ].fileName);
         isLong = typs[typ].isLong;
         isHight = typs[typ].isHeight;
-        if ( isHight ) setX( getX() - getWidth() / 2 );
+        if ( !isHight ) setX( getX() + 30 );
         setBoundaryRectangle();
 
         setSpeed(200);

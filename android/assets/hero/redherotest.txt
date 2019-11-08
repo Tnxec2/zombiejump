@@ -1,0 +1,68 @@
+redherotest.png
+size: 1363, 244
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+walk_001
+  rotate: false
+  xy: 1, 1
+  size: 153, 236
+  orig: 153, 236
+  offset: 0, 0
+  index: -1
+walk_002
+  rotate: false
+  xy: 156, 1
+  size: 149, 238
+  orig: 149, 238
+  offset: 0, 0
+  index: -1
+walk_003
+  rotate: false
+  xy: 307, 1
+  size: 148, 239
+  orig: 148, 239
+  offset: 0, 0
+  index: -1
+walk_004
+  rotate: false
+  xy: 457, 1
+  size: 147, 241
+  orig: 147, 241
+  offset: 0, 0
+  index: -1
+walk_005
+  rotate: false
+  xy: 606, 1
+  size: 147, 240
+  orig: 147, 240
+  offset: 0, 0
+  index: -1
+walk_006
+  rotate: false
+  xy: 755, 1
+  size: 151, 234
+  orig: 151, 234
+  offset: 0, 0
+  index: -1
+walk_007
+  rotate: false
+  xy: 908, 1
+  size: 151, 241
+  orig: 151, 241
+  offset: 0, 0
+  index: -1
+walk_008
+  rotate: false
+  xy: 1061, 1
+  size: 148, 242
+  orig: 148, 242
+  offset: 0, 0
+  index: -1
+walk_009
+  rotate: false
+  xy: 1211, 1
+  size: 151, 241
+  orig: 151, 241
+  offset: 0, 0
+  index: -1

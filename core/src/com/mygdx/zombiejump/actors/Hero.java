@@ -15,8 +15,8 @@ public class Hero extends BaseActor {
     public Hero(float x, float y, Stage s) {
         super(x, y, s);
         
-        loadAnimationFromSheet("angryhero.png", 1, 3, 0.1f, true);
-        setBoundaryPolygon(8);
+        loadAnimationFromSheet("angryhero.png", 1, 9, 0.1f, true);
+        setBoundaryPolygon(12);
 
         setAcceleration(100);
         gravity = 700;
