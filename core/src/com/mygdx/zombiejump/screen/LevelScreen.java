@@ -109,13 +109,19 @@ public class LevelScreen extends BaseScreen {
         Vector2 offset;
         for (BaseActor homeActor : BaseActor.getList(mainStage, Home.class.getName())) {
             offset = hero.preventOverlap(homeActor);
+            if ( hero.getY() > homeActor.getWidth() && hero.getY() < homeActor.getWidth() + 2 ) {
+                hero.setJumping(false);
+                if ( hero.getX() > heroX  ) hero.setX(heroX);
+            }
+/*
+            offset = hero.preventOverlap(homeActor);
             if (offset != null) {
                 if (Math.abs(offset.y) > Math.abs(offset.x) && hero.isJumping()) {
                     hero.setJumping(false);
                     hero.setX(heroX);
                 }
             }
-
+*/
             if (homeActor.getX() + homeActor.getWidth() <= 0) {
                 homeActor.remove();
             }
