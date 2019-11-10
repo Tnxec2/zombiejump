@@ -64,7 +64,7 @@ public class LevelScreen extends BaseScreen {
 
         Zombiejump.zombieCount = 0;
         Zombiejump.health = 3;
-        Zombiejump.coins = 0;
+        Zombiejump.coinsCount = 0;
 
         sky1 = new Sky(0, 0, mainStage);
         sky2 = new Sky(sky1.getWidth(), 0, mainStage);
@@ -88,7 +88,7 @@ public class LevelScreen extends BaseScreen {
         healthLabel = new Label(" x " + Zombiejump.health, BaseUI.labelStyle);
         healthLabel.setColor(Color.PINK);
 
-        coinLabel  = new Label(" x " + Zombiejump.coins,  BaseUI.labelStyle);
+        coinLabel  = new Label(" x " + Zombiejump.coinsCount,  BaseUI.labelStyle);
         coinLabel.setColor(Color.GOLD);
 
         dialogBox = new BaseDialogBox(0,0, uiStage);
@@ -172,8 +172,8 @@ public class LevelScreen extends BaseScreen {
             {
                 if ( audioVolume > 0 ) sparkle.play();
                 coinActor.remove();
-                Zombiejump.coins++;
-                coinLabel.setText(" x " + Zombiejump.coins );
+                Zombiejump.coinsCount++;
+                coinLabel.setText(" x " + Zombiejump.coinsCount );
             }
         }
 

@@ -1,6 +1,7 @@
 package com.mygdx.zombiejump.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,6 +16,8 @@ import com.mygdx.zombiejump.utils.Constants;
  */
 public class GameOverScreen extends BaseScreen {
 
+    static Preferences prefs = Gdx.app.getPreferences("ZombieJumpPrefs");
+    
     @Override
     public void initialize() {
         BaseActor wall = new BaseActor(0, 0, mainStage);
@@ -35,7 +38,7 @@ public class GameOverScreen extends BaseScreen {
         Label zombieLabel = new Label(" x " + Zombiejump.zombieCount, BaseUI.labelStyle);
         zombieLabel.setColor(Color.CYAN);
 
-        Label coinLabel = new Label(" x " + Zombiejump.coins, BaseUI.labelStyle);
+        Label coinLabel = new Label(" x " + Zombiejump.coinsCount, BaseUI.labelStyle);
         coinLabel.setColor(Color.GOLD);
 
         Label message = new Label(" Touch to restart", BaseUI.labelStyle);
@@ -50,6 +53,20 @@ public class GameOverScreen extends BaseScreen {
         uiTable.add(coinLabel);
         uiTable.row();
         uiTable.add(message).colspan(2).expandY();
+
+        int coinsHighScore = prefs.getInteger("coinsHighScore", 0);
+        int zombieHighScore = prefs.getInteger("zombieHighScore", 0);
+
+        if ( Zombiejump.zombieCount > zombieHighScore ) {
+            zombieHighScore = Zombiejump.zombieCount;
+            prefs.putInteger("zombieHighScore", Zombiejump.zombieCount);
+            zombieLabel.setText(zombieLabel.getText() + " !!! New High Score" );
+        }
+        if ( Zombiejump.coinsCount > coinsHighScore ) {
+            coinsHighScore = Zombiejump.coinsCount;
+            prefs.putInteger("coinsHighScore", Zombiejump.coinsCount);
+            coinLabel.setText(coinLabel.getText() + " !!! New High Score" );
+        }
     }
 
     @Override
