@@ -3,6 +3,7 @@ package com.mygdx.zombiejump.actors;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.zombiejump.base.BaseActor;
+import com.mygdx.zombiejump.utils.Constants;
 
 /**
  * 
@@ -10,17 +11,7 @@ import com.mygdx.zombiejump.base.BaseActor;
 public class Home extends BaseActor {
 
     private Props[] typs = { 
-        new Props(true, false,"home1.png"),
-        new Props(false, true, "home2.png"),
-        new Props(false, false, "home3.png"),
-        new Props(false, false,"home4.png"),
-        new Props(false, false, "home5.png"),
-        new Props(true,  false, "home6.png"),
-        new Props(false, false, "home7.png"),
-        new Props(  true,false,"home8.png"),
-        new Props(false, false, "home9.png"),
-        new Props(false, true,"home10.png"),
-        new Props(false, false, "home11.png")
+        new Props( true, false, "zombierun-grafitti-1.png")
     };
 
     public boolean isLong;
@@ -42,17 +33,27 @@ public class Home extends BaseActor {
         loadTexture(typs[typ].fileName);
         isLong = typs[typ].isLong;
         isHight = typs[typ].isHeight;
-        if ( !isHight ) setX( getX() + 30 );
+        
+        //if ( !isHight ) setX( getX() + 40 );
+
+        setY( - MathUtils.random( 0, getHeight() / 2 ) );
+
         setBoundaryRectangle();
 
-        setSpeed(200);
+        setSpeed(Constants.SCROLL_SPEED_GROUND);
+
+
     }
-   
+
     @Override
     public void act(float dt) {
         super.act(dt);
 
         setX(getX() - dt * getSpeed());
+
+        if (getX() + getWidth() <= 0) {
+            remove();
+        }
     }
 
     class Props {
