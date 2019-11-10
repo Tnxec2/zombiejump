@@ -55,13 +55,7 @@ public class GameOverScreen extends BaseScreen {
         uiTable.add(message).colspan(2).expandY();
 
         int coinsHighScore = prefs.getInteger("coinsHighScore", 0);
-        int zombieHighScore = prefs.getInteger("zombieHighScore", 0);
 
-        if ( Zombiejump.zombieCount > zombieHighScore ) {
-            zombieHighScore = Zombiejump.zombieCount;
-            prefs.putInteger("zombieHighScore", Zombiejump.zombieCount);
-            zombieLabel.setText(zombieLabel.getText() + " !!! New High Score" );
-        }
         if ( Zombiejump.coinsCount > coinsHighScore ) {
             coinsHighScore = Zombiejump.coinsCount;
             prefs.putInteger("coinsHighScore", Zombiejump.coinsCount);
