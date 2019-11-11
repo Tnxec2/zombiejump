@@ -1,7 +1,9 @@
 package com.mygdx.zombiejump.actors;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.zombiejump.base.BaseActor;
+import com.mygdx.zombiejump.utils.AudioUtils;
 import com.mygdx.zombiejump.utils.Constants;
 
 /**
@@ -13,6 +15,8 @@ public class Hero extends BaseActor {
     private float jumpSpeed;
     private boolean jumping;
     private boolean canJump;
+
+    private Sound jumpSound;
 
     public Hero(float x, float y, Stage s) {
         super(x, y, s);
@@ -26,12 +30,18 @@ public class Hero extends BaseActor {
         jumping = false;
         canJump = false;
         setMaxSpeed(Constants.HERO_SPEED_MAX);
+
+        jumpSound = AudioUtils.getInstance().getJumpSound();
     }
 
-	public void jump() {
+	public boolean jump() {
         if ( !jumping && canJump ) {
             velocityVec.y = jumpSpeed;
             jumping = true;
+            AudioUtils.getInstance().playSound(jumpSound);
+            return true;
+        } else {
+            return false;
         }
 	}
 
