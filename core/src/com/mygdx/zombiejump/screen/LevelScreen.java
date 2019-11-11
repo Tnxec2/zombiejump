@@ -5,13 +5,16 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.zombiejump.Zombiejump;
 import com.mygdx.zombiejump.actors.Coin;
 import com.mygdx.zombiejump.actors.Hero;
@@ -24,6 +27,7 @@ import com.mygdx.zombiejump.base.BaseDialogBox;
 import com.mygdx.zombiejump.base.BaseGame;
 import com.mygdx.zombiejump.base.BaseScreen;
 import com.mygdx.zombiejump.base.BaseUI;
+import com.mygdx.zombiejump.utils.AudioUtils;
 import com.mygdx.zombiejump.utils.Constants;
 
 /**
@@ -31,18 +35,12 @@ import com.mygdx.zombiejump.utils.Constants;
  */
 public class LevelScreen extends BaseScreen {
 
-    private OrthographicCamera camera;
-
-    private Rectangle screenLeftSide;
-    private Rectangle screenRightSide;
-    private Vector3 touchPoint;
-
     private Sky sky1, sky2;
 
     private Hero hero;
 
     private float zombieSpawnTimer;
-    private float zombieSpawnInterval = 1f;
+    private float zombieSpawnInterval;
 
     
     private Home lastHome;
@@ -54,9 +52,8 @@ public class LevelScreen extends BaseScreen {
     private boolean gameOver;
     
     private Music music;
-    private Sound jump, hit, shotgun, dryfire, reload, sparkle;
-    private float audioVolume;
-    
+    private Sound hitSound, shotgunSound, dryfireSound, reloadSound, sparkleSound;
+
     private Vector2 offset;
     
     private Shot shot;
@@ -117,18 +114,35 @@ public class LevelScreen extends BaseScreen {
 
         gameOver = false;
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("Shanghai_Action.mp3"));
-        jump = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
-        hit = Gdx.audio.newSound(Gdx.files.internal("hit.wav"));
-        shotgun = Gdx.audio.newSound(Gdx.files.internal("shotgun.wav"));
-        dryfire = Gdx.audio.newSound(Gdx.files.internal("dryfire.wav"));
-        reload = Gdx.audio.newSound(Gdx.files.internal("reload.wav"));
-        sparkle = Gdx.audio.newSound(Gdx.files.internal("sparkle.mp3"));
+        Texture touchTexture = new Texture(Gdx.files.internal("touchpoint.png"));
+        Texture touchTexturePressed = new Texture(Gdx.files.internal("touchpoint-pressed.png"));
+        ImageButton jumpButton = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(touchTexture)),
+            new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
+        );
+        jumpButton.setPosition(10, 10);
+        uiStage.addActor(jumpButton);
 
-        audioVolume = -0.50f;
-        music.setLooping(true);
-        music.setVolume(audioVolume);
-        music.play();
+        jumpButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                doJump();
+                return false;
+            }            
+        });
+
+        ImageButton shotButton = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(touchTexture)),
+            new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
+        );
+        shotButton.setPosition(Constants.GAME_WINDOW_WIDTH-shotButton.getWidth()-10 , 10);
+        uiStage.addActor(shotButton);
+
+        shotButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                doShoot();
+                return false;
+            }            
+        });
 
         uiTable.pad(20);
         uiTable.add(zombieIcon);
@@ -143,8 +157,8 @@ public class LevelScreen extends BaseScreen {
         uiTable.add(nachladeLabel).colspan(6).top().left();
         uiTable.add().expand();
         uiTable.row();
-        uiTable.add(dialogBox).colspan(6);
-        
+
+        getAudio();
     }
 
     @Override
@@ -170,7 +184,7 @@ public class LevelScreen extends BaseScreen {
         {
             if (hero.overlaps(coinActor))
             {
-                sparkle.play(audioVolume);
+                AudioUtils.getInstance().playSound(sparkleSound);
                 coinActor.remove();
                 Zombiejump.coinsCount++;
                 coinLabel.setText(" x " + Zombiejump.coinsCount );
@@ -211,6 +225,7 @@ public class LevelScreen extends BaseScreen {
             if ((hero.getX() + hero.getWidth()) > homeActor.getX()
                     && (hero.getX() + hero.getWidth() * 0.25) < (homeActor.getX() + homeActor.getWidth())) {
                 hero.setCanJump(true);
+                //System.out.println("Can Jump: " + hero.isCanJump() );
             }
         }
 
@@ -228,7 +243,7 @@ public class LevelScreen extends BaseScreen {
                 if ( ! reloadShot ) {
                     reloadShot = true;
                     nachladeLabel.setText(Zombiejump.myBundle.format("readyToShot"));
-                    reload.play(audioVolume);
+                    AudioUtils.getInstance().playSound(reloadSound);
                 }
             }
         } 
@@ -244,7 +259,7 @@ public class LevelScreen extends BaseScreen {
         Zombiejump.health--;
         healthLabel.setText(" x " + Zombiejump.health);
         shot.hide();
-        hit.play(audioVolume);
+        AudioUtils.getInstance().playSound(hitSound);
 
         if ( Zombiejump.health <= 0 ) {
             gameOver();
@@ -255,7 +270,6 @@ public class LevelScreen extends BaseScreen {
     private void spawnZombie() {
         if (lastHome.isLong) {
             if (lastHome.getX() + lastHome.getWidth() > Constants.GAME_WINDOW_WIDTH) {
-
                 new Zombie(
                     lastHome.getX() + lastHome.getWidth() - 64,
                     lastHome.getHeight() + lastHome.getY(),
@@ -293,14 +307,8 @@ public class LevelScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-        if (!gameOver) {
-            if (rightSideTouched(screenX, screenY)) {
-                doJump();
-            } else if (leftSideTouched(screenX, screenY)) {
-                doShoot();
-            }
-        } else if (gameOver) {
+        
+        if (gameOver) {
             newGame();
         }
 
@@ -311,13 +319,7 @@ public class LevelScreen extends BaseScreen {
     public void hide() {
         super.hide();
 
-        music.dispose();
-        jump.dispose();
-        hit.dispose();
-        shotgun.dispose();
-        dryfire.dispose();
-        reload.dispose();
-        sparkle.dispose();
+        AudioUtils.getInstance().pauseMusic();
     }
 
     @Override
@@ -341,7 +343,6 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void doJump() {
-        jump.play(audioVolume);
         hero.jump();
     }
 
@@ -349,7 +350,7 @@ public class LevelScreen extends BaseScreen {
 
         if ( shotTime < Constants.SHOT_RELOAD_INTERVAL || shot.isVisible() ) {
             if ( shotTime < Constants.SHOT_RELOAD_INTERVAL ) {
-                dryfire.play(audioVolume);
+                AudioUtils.getInstance().playSound(dryfireSound);
             }
             return;
         }
@@ -357,8 +358,18 @@ public class LevelScreen extends BaseScreen {
         shot.setX(hero.getX() + hero.getWidth());
         shot.setY(hero.getY() + hero.getHeight() / 2 );
         shot.show();
-        shotgun.play(audioVolume);
+        AudioUtils.getInstance().playSound(shotgunSound);
         reloadShot = false;
+    }
+
+    private void getAudio() {
+        music = AudioUtils.getInstance().getMusic();
+        
+        hitSound = AudioUtils.getInstance().getHitSound();
+        shotgunSound = AudioUtils.getInstance().getShotgunSound();
+        dryfireSound = AudioUtils.getInstance().getDryfireSound();
+        reloadSound = AudioUtils.getInstance().getReloadSound();
+        sparkleSound = AudioUtils.getInstance().getSparkleSound();
     }
     
 }
