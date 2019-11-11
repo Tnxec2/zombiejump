@@ -20,7 +20,8 @@ public class Zombiejump extends BaseGame {
         super.create();
         
         FileHandle baseFileHandle = Gdx.files.internal("i18n/lang");
-        //Locale locale = new Locale("de", "DE");
+        //Locale locale = new Locale("ru");
+        //myBundle = I18NBundle.createBundle(baseFileHandle, locale);
         myBundle = I18NBundle.createBundle(baseFileHandle, Locale.getDefault());
 
         setActiveScreen( new MenuScreen() );

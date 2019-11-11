@@ -33,7 +33,7 @@ public class LevelScreen extends BaseScreen {
     private Hero hero;
 
     private float zombieSpawnTimer;
-    private float zombieSpawnTIme;
+    private float zombieSpawnInterval = 1f;
 
     
     private Home lastHome;
@@ -48,7 +48,7 @@ public class LevelScreen extends BaseScreen {
     private Sound jump, hit, shotgun, dryfire, reload, sparkle;
     private float audioVolume;
     
-    Vector2 offset;
+    private Vector2 offset;
     
     private Shot shot;
 
@@ -70,9 +70,8 @@ public class LevelScreen extends BaseScreen {
 
         lastHome = new Home(Constants.HERO_STARTX - 100, 0, mainStage, 0);
         hero = new Hero(Constants.HERO_STARTX, lastHome.getHeight(), mainStage);
-        shot = new Shot(10000, 10000, mainStage);
+        shot = new Shot(0, 0, mainStage);
         shotTime = Constants.SHOT_RELOAD_INTERVAL;
-        shot.hide();
 
         BaseActor zombieIcon = new BaseActor(0,0,uiStage);
         zombieIcon.loadTexture(Constants.TEXTURE_ICON_ZOMBIE);
@@ -183,7 +182,7 @@ public class LevelScreen extends BaseScreen {
 
         }
 
-        if (zombieSpawnTimer >= zombieSpawnTIme) {
+        if (zombieSpawnTimer >= zombieSpawnInterval) {
             spawnZombie();
         }
         zombieSpawnTimer += delta;
@@ -247,13 +246,13 @@ public class LevelScreen extends BaseScreen {
     private void spawnZombie() {
         if (lastHome.isLong) {
             if (lastHome.getX() + lastHome.getWidth() > Constants.GAME_WINDOW_WIDTH) {
-                int rand = MathUtils.random(1);
+
                 new Zombie(
                     lastHome.getX() + lastHome.getWidth() - 64,
                     lastHome.getHeight() + lastHome.getY(),
-                    mainStage, rand);
+                    mainStage);
                 zombieSpawnTimer = 0;
-                zombieSpawnTIme = MathUtils.random(3f) + 1f;
+                zombieSpawnInterval = MathUtils.random(3f) + 1f;
             }
         }
     }

@@ -53,8 +53,9 @@ public class Constants {
     /*
     * UI Section
     */
+    public static final String UI_TFT_FONT = "SpriteGraffiti-Regular.ttf";
     //public static final String UI_TFT_FONT = "OpenSans.ttf";
-    public static final String UI_TFT_FONT = "softsugarplain.ttf";
+    //public static final String UI_TFT_FONT = "softsugarplain.ttf";
     public static final String UI_BUTTON_TEXTURE = "button.png";
     public static final Color UI_TEXT_COLOR_DEFAULT = Color.GOLD;
     public static final Color UI_TEXT_COLOR_ZOMBIE = Color.CYAN;
