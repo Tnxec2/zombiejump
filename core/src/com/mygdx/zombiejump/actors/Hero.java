@@ -17,7 +17,7 @@ public class Hero extends BaseActor {
     public Hero(float x, float y, Stage s) {
         super(x, y, s);
         
-        loadAnimationFromSheet(Constants.RUNNING_TEXTURE_FILENAME, 1, 9, 0.1f, true);
+        loadAnimationFromSheet(Constants.TEXTURE_HERO_RUNNING, 1, 9, 0.1f, true);
         setBoundaryPolygon(12);
 
         setAcceleration(100);

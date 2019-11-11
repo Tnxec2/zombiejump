@@ -25,6 +25,7 @@ public class Zombie extends BaseActor {
         super.act(dt);
 
         applyPhsysic(dt);
+        if ( isOutOfWorld() ) remove();
     }
-    
+   
 }

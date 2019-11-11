@@ -9,7 +9,7 @@ public class Coin extends BaseActor
     public Coin(float x, float y, Stage s)
     {
         super(x,y,s);
-        loadAnimationFromSheet("coin.png", 1, 8, 0.1f, true);
+        loadAnimationFromSheet(Constants.TEXTURE_COIN, 1, 8, 0.1f, true);
         
         setSpeed(Constants.SCROLL_SPEED_GROUND);
         setMotionAngle(180);

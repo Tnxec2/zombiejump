@@ -56,8 +56,7 @@ public class LevelScreen extends BaseScreen {
     private float shotTime;
 
     private float starTimer;
-
-    
+  
     
     @Override
     public void initialize() {
@@ -76,25 +75,25 @@ public class LevelScreen extends BaseScreen {
         shot.hide();
 
         BaseActor zombieIcon = new BaseActor(0,0,uiStage);
-        zombieIcon.loadTexture("zombie-icon.png");
+        zombieIcon.loadTexture(Constants.TEXTURE_ICON_ZOMBIE);
         BaseActor healthIcon = new BaseActor(0,0,uiStage);
-        healthIcon.loadTexture("heart-icon.png");
+        healthIcon.loadTexture(Constants.TEXTURE_ICON_HEALTH);
         BaseActor coinIcon = new BaseActor(0,0,uiStage);
-        coinIcon.loadTexture("coin-icon.png");
+        coinIcon.loadTexture(Constants.TEXTURE_ICON_COIN);
 
         zombieLabel = new Label(" x " + Zombiejump.zombieCount, BaseUI.labelStyle);
-        zombieLabel.setColor(Color.CYAN);
+        zombieLabel.setColor(Constants.UI_TEXT_COLOR_ZOMBIE);
 
         healthLabel = new Label(" x " + Zombiejump.health, BaseUI.labelStyle);
-        healthLabel.setColor(Color.PINK);
+        healthLabel.setColor(Constants.UI_TEXT_COLOR_HEALTH);
 
         coinLabel  = new Label(" x " + Zombiejump.coinsCount,  BaseUI.labelStyle);
-        coinLabel.setColor(Color.GOLD);
+        coinLabel.setColor(Constants.UI_TEXT_COLOR_COIN);
 
         dialogBox = new BaseDialogBox(0,0, uiStage);
         dialogBox.setBackgroundColor( Color.TAN );
         dialogBox.setFontColor( Color.BROWN );
-        dialogBox.setDialogSize(600, 100);
+        dialogBox.setDialogSize(Constants.GAME_WINDOW_WIDTH / 4 * 3, 100); // width = three-fourths of game width
         dialogBox.setFontScale(0.80f);
         dialogBox.alignCenter();
         dialogBox.setVisible(false);
@@ -102,8 +101,8 @@ public class LevelScreen extends BaseScreen {
         spawnHome();
         spawnWidthHome = MathUtils.random(100, 170);
 
-        nachladeLabel = new Label("Nachladen in:", BaseUI.labelStyle);
-        nachladeLabel.setColor(Color.GOLD);
+        nachladeLabel = new Label(Zombiejump.myBundle.format("reloadIn", 0), BaseUI.labelStyle);
+        nachladeLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
         reloadShot = false;
 
         BaseActor.setWorldBounds(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT);
@@ -118,7 +117,7 @@ public class LevelScreen extends BaseScreen {
         reload = Gdx.audio.newSound(Gdx.files.internal("reload.wav"));
         sparkle = Gdx.audio.newSound(Gdx.files.internal("sparkle.mp3"));
 
-        audioVolume = 0.50f;
+        audioVolume = -0.50f;
         music.setLooping(true);
         music.setVolume(audioVolume);
         music.play();
@@ -143,19 +142,12 @@ public class LevelScreen extends BaseScreen {
     @Override
     public void update(float delta) {
 
-        System.out.println("Actors: " + mainStage.getActors().size);
-
         if (gameOver)
             return;
 
         if (hero.isOutOfWorld() && !gameOver) {
             heroOutofWorld();
         }
-
-        if (sky1.getX() + sky1.getWidth() < 0)
-            sky1.setX(sky2.getX() + sky2.getWidth());
-        if (sky2.getX() + sky2.getWidth() < 0)
-            sky2.setX(sky1.getX() + sky1.getWidth());
 
         starTimer += delta;
         if (starTimer > Constants.COIN_SPAWN_INTERVAL)
@@ -170,7 +162,7 @@ public class LevelScreen extends BaseScreen {
         {
             if (hero.overlaps(coinActor))
             {
-                if ( audioVolume > 0 ) sparkle.play();
+                sparkle.play(audioVolume);
                 coinActor.remove();
                 Zombiejump.coinsCount++;
                 coinLabel.setText(" x " + Zombiejump.coinsCount );
@@ -189,8 +181,6 @@ public class LevelScreen extends BaseScreen {
                 zombieHit(zombieActor);
             }
 
-            if (zombieActor.getX() + zombieActor.getWidth() <= 0)
-                zombieActor.remove();
         }
 
         if (zombieSpawnTimer >= zombieSpawnTIme) {
@@ -216,7 +206,7 @@ public class LevelScreen extends BaseScreen {
             }
         }
 
-        if (800 - (lastHome.getX() + lastHome.getWidth()) > spawnWidthHome)
+        if (Constants.GAME_WINDOW_WIDTH - (lastHome.getX() + lastHome.getWidth()) > spawnWidthHome)
             spawnHome();
 
         zombieLabel.setText(" x " + Zombiejump.zombieCount);
@@ -225,13 +215,12 @@ public class LevelScreen extends BaseScreen {
 
         if ( !gameOver ) {
             if (shotTime < Constants.SHOT_RELOAD_INTERVAL ) {
-                nachladeLabel.setText("Reload in " + 
-                    MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime) + " sec." );
+                nachladeLabel.setText(Zombiejump.myBundle.format("reloadIn", MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime)) );
             } else {
                 if ( ! reloadShot ) {
                     reloadShot = true;
-                    nachladeLabel.setText("Ready to shoot!");
-                    if ( audioVolume > 0) reload.play();
+                    nachladeLabel.setText(Zombiejump.myBundle.format("readyToShot"));
+                    reload.play(audioVolume);
                 }
             }
         } 
@@ -247,7 +236,7 @@ public class LevelScreen extends BaseScreen {
         Zombiejump.health--;
         healthLabel.setText(" x " + Zombiejump.health);
         shot.hide();
-        if ( audioVolume > 0) hit.play();
+        hit.play(audioVolume);
 
         if ( Zombiejump.health <= 0 ) {
             gameOver();
@@ -286,7 +275,7 @@ public class LevelScreen extends BaseScreen {
         shot.remove();
         nachladeLabel.remove();
         BaseActor gameOverMessage = new BaseActor(0, 0, uiStage);
-        gameOverMessage.loadTexture("gameover.png");
+        gameOverMessage.loadTexture(Constants.TEXTURE_GAME_OVER);
         gameOverMessage.centerAtPosition(Constants.GAME_WINDOW_WIDTH / 2, 
                                         Constants.GAME_WINDOW_HEIGHT / 2);
         gameOverMessage.setOpacity(0);
@@ -298,7 +287,7 @@ public class LevelScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
         if (!gameOver) {
-            if ( audioVolume > 0) jump.play();
+            jump.play(audioVolume);
             hero.jump();
         } else if (gameOver) {
             newGame();
@@ -310,7 +299,14 @@ public class LevelScreen extends BaseScreen {
     @Override
     public void hide() {
         super.hide();
+
         music.dispose();
+        jump.dispose();
+        hit.dispose();
+        shotgun.dispose();
+        dryfire.dispose();
+        reload.dispose();
+        sparkle.dispose();
     }
 
     @Override
@@ -337,7 +333,7 @@ public class LevelScreen extends BaseScreen {
 
         if ( shotTime < Constants.SHOT_RELOAD_INTERVAL || shot.isVisible() ) {
             if ( shotTime < Constants.SHOT_RELOAD_INTERVAL ) {
-                if ( audioVolume > 0) dryfire.play();
+                dryfire.play(audioVolume);
             }
             return;
         }
@@ -345,10 +341,8 @@ public class LevelScreen extends BaseScreen {
         shot.setX(hero.getX() + hero.getWidth());
         shot.setY(hero.getY() + hero.getHeight() / 2 );
         shot.show();
-        if ( audioVolume > 0) shotgun.play();
+        shotgun.play(audioVolume);
         reloadShot = false;
     }
-
-
     
 }
