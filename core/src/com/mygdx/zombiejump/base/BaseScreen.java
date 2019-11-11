@@ -20,7 +20,6 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     protected Stage uiStage;
     protected Table uiTable;
 
-    private Vector3 touchPoint;
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
 
