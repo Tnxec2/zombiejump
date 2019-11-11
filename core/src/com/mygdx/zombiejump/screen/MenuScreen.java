@@ -88,8 +88,7 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void newGame() {
-        Zombiejump.setActiveScreen(new GameOverScreen());
-        //Zombiejump.setActiveScreen(new LevelScreen());
+        Zombiejump.setActiveScreen(new LevelScreen());
     }
 
     private void quitGame() {
