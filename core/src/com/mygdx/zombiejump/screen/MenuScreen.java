@@ -11,6 +11,7 @@ import com.mygdx.zombiejump.Zombiejump;
 import com.mygdx.zombiejump.base.BaseActor;
 import com.mygdx.zombiejump.base.BaseScreen;
 import com.mygdx.zombiejump.base.BaseUI;
+import com.mygdx.zombiejump.utils.AudioUtils;
 import com.mygdx.zombiejump.utils.Constants;
 
 
@@ -18,6 +19,8 @@ import com.mygdx.zombiejump.utils.Constants;
  * 
  */
 public class MenuScreen extends BaseScreen {
+
+    Label toggleMusic, toggleSound;
 
     @Override
     public void initialize() {
@@ -29,6 +32,28 @@ public class MenuScreen extends BaseScreen {
         title.loadTexture(Constants.TEXTURE_MENU_SCREEN_TITLE);
         title.centerAtActor(wall);
         title.moveBy(0, 100);
+
+        toggleMusic = new Label( Zombiejump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) , BaseUI.labelStyle);
+        toggleMusic.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+
+        toggleMusic.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AudioUtils.getInstance().toggleMusic();
+                toggleMusic.setText(Zombiejump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) );
+                return false;
+            }
+        });
+
+        toggleSound = new Label( Zombiejump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) , BaseUI.labelStyle);
+        toggleSound.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+
+        toggleSound.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AudioUtils.getInstance().toggleSound();
+                toggleSound.setText(Zombiejump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) );
+                return false;
+            }
+        });
 
         TextButton startButton = new TextButton( Zombiejump.myBundle.format("startJump"), BaseUI.textButtonStyle);
 
@@ -56,7 +81,22 @@ public class MenuScreen extends BaseScreen {
             }
         });
 
+        uiTable.add(toggleMusic).expandX();
+        uiTable.add(toggleSound);
+        uiTable.row();
+
         uiTable.add(title).colspan(2).expandY();
+        uiTable.row();
+
+        Label tutorialLeft = new Label(Zombiejump.myBundle.format("tutorial1"), BaseUI.labelStyle);
+        tutorialLeft.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+        Label tutorialRight = new Label(Zombiejump.myBundle.format("tutorial2"), BaseUI.labelStyle);
+        tutorialRight.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+
+        uiTable.add(tutorialLeft).colspan(2);
+        uiTable.row();
+        uiTable.add(tutorialRight).colspan(2);
+
         uiTable.row();
         uiTable.add(startButton).expand();
         uiTable.add(quitButton).expand();
