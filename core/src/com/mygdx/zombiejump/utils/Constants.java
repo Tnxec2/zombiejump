@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 public class Constants {
     
     public static final int GAME_WINDOW_WIDTH = 800;
-    public static final int GAME_WINDOW_HEIGHT = 600;
+    public static final int GAME_WINDOW_HEIGHT = 480;
     
     public static final int HERO_STARTX = 200;
     public static final int HERO_GRAVITY = 700;
