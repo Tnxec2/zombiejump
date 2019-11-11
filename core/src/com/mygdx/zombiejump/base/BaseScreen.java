@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
@@ -18,6 +20,10 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     protected Stage uiStage;
     protected Table uiTable;
 
+    private Vector3 touchPoint;
+    private Rectangle screenLeftSide;
+    private Rectangle screenRightSide;
+
     public BaseScreen() {
         mainStage = new Stage(new ScalingViewport(Scaling.stretch, Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT,
                 new OrthographicCamera(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT)));
@@ -27,7 +33,8 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         uiTable = new Table();
         uiTable.setFillParent(true);
         uiStage.addActor(uiTable);
-
+        setUpTouchControlAreas();
+        
         initialize();
     }
 
@@ -81,6 +88,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         im.addProcessor(this);
         im.addProcessor(uiStage);
         im.addProcessor(mainStage);
+        
     }
 
     /**
@@ -144,5 +152,19 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         return false;
     }
 
-    
+    private void setUpTouchControlAreas() {
+        touchPoint = new Vector3();
+        screenLeftSide = new Rectangle(0, 0, mainStage.getCamera().viewportWidth / 2,
+        mainStage.getCamera().viewportHeight);
+        screenRightSide = new Rectangle(mainStage.getCamera().viewportWidth / 2, 0,
+        mainStage.getCamera().viewportWidth / 2, mainStage.getCamera().viewportHeight);
+    }
+
+    public boolean rightSideTouched(float x, float y) {
+        return screenRightSide.contains(x, y);
+    }
+
+    public boolean leftSideTouched(float x, float y) {
+        return screenLeftSide.contains(x, y);
+    }
 }

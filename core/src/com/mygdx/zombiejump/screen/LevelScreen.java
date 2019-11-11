@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.zombiejump.Zombiejump;
@@ -27,6 +30,12 @@ import com.mygdx.zombiejump.utils.Constants;
  * LevelScreen
  */
 public class LevelScreen extends BaseScreen {
+
+    private OrthographicCamera camera;
+
+    private Rectangle screenLeftSide;
+    private Rectangle screenRightSide;
+    private Vector3 touchPoint;
 
     private Sky sky1, sky2;
 
@@ -286,8 +295,11 @@ public class LevelScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
         if (!gameOver) {
-            jump.play(audioVolume);
-            hero.jump();
+            if (rightSideTouched(screenX, screenY)) {
+                doJump();
+            } else if (leftSideTouched(screenX, screenY)) {
+                doShoot();
+            }
         } else if (gameOver) {
             newGame();
         }
@@ -315,7 +327,7 @@ public class LevelScreen extends BaseScreen {
                 if (!gameOver) doShoot();
                 break;
             case Keys.SPACE:
-                if (!gameOver) hero.jump();
+                if (!gameOver) doJump();
                 else newGame();
                 break;
             default:
@@ -326,6 +338,11 @@ public class LevelScreen extends BaseScreen {
 
     private void newGame() {
         BaseGame.setActiveScreen(new GameOverScreen());
+    }
+
+    private void doJump() {
+        jump.play(audioVolume);
+        hero.jump();
     }
 
     private void doShoot() {
