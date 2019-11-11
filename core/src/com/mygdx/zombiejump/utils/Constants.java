@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color;
  * Constants
  */
 public class Constants {
-    
+    public static final String GAME_TITLE = "Zombie Jump";
     public static final int GAME_WINDOW_WIDTH = 800;
     public static final int GAME_WINDOW_HEIGHT = 480;
     
@@ -62,4 +62,20 @@ public class Constants {
     public static final Color UI_TEXT_COLOR_COIN = Color.GOLD;
     public static final Color UI_TEXT_COLOR_HEALTH = Color.RED;
     
+    /*
+    *   Audio
+    */
+    public static final String AUDIO_GAME_MUSIK = "audio/Shanghai_Action.ogg";
+	public static final String AUDIO_JUMPING_SOUND = "audio/jump.wav";
+	public static final String AUDIO_HIT_SOUND = "audio/hit.wav";
+	public static final String AUDIO_SHOTGUN_SOUND = "audio/shotgun.wav";
+	public static final String AUDIO_DRYFIRE_SOUND = "audio/dryfire.wav";
+	public static final String AUDIO_RELOAD_SOUND = "audio/reload.wav";
+    public static final String AUDIO_SPARKLE_SOUND = "audio/sparkle.ogg";
+    
+    public static final String SOUND_ON_REGION_NAME = "sound_on";
+    public static final String SOUND_OFF_REGION_NAME = "sound_off";
+    public static final String MUSIC_ON_REGION_NAME = "music_on";
+    public static final String MUSIC_OFF_REGION_NAME = "music_off";
+
 }
