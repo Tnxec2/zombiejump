@@ -21,7 +21,7 @@ public class BaseUI {
     public static LabelStyle labelStyle; // BitmapFont + Color
     public static TextButtonStyle textButtonStyle; // NPD + BitmapFont + Color
     
-    static {
+    public static void loadAssets() {
         // parameters for generating a custom bitmap font
         FreeTypeFontGenerator fontGenerator = 
             new FreeTypeFontGenerator(Gdx.files.internal(Constants.UI_TFT_FONT));
