@@ -5,8 +5,12 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.mygdx.zombiejump.utils.Constants;
 
 public abstract class BaseScreen implements Screen, InputProcessor {
 
@@ -15,8 +19,10 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     protected Table uiTable;
 
     public BaseScreen() {
-        mainStage = new Stage();
-        uiStage = new Stage();
+        mainStage = new Stage(new ScalingViewport(Scaling.stretch, Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT,
+                new OrthographicCamera(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT)));
+        uiStage = new Stage(new ScalingViewport(Scaling.stretch, Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT,
+                new OrthographicCamera(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT)));
 
         uiTable = new Table();
         uiTable.setFillParent(true);
