@@ -8,28 +8,33 @@ import com.mygdx.zombiejump.utils.Constants;
 /**
  * 
  */
-public class Home extends BaseActor {
+public class Home extends BaseActor
+{
 
-    private Props[] typs = { 
-        new Props( true, false, "zombierun-grafitti-1.png")
+    private Props[] typs =
+            {
+        new Props( true, false, "home1.png")
     };
 
     public boolean isLong;
     public boolean isHight;
 
-    public Home(float x, float y, Stage s ) {
+    public Home(float x, float y, Stage s )
+    {
         super(x, y, s);
 
         setHome(x, MathUtils.random(typs.length-1));
     }
 
-    public Home(float x, float y, Stage s, int typ ) {
+    public Home(float x, float y, Stage s, int typ )
+    {
         super(x, y, s);
         
         setHome(x, typ);
     }
 
-    private  void setHome(float x, int typ) {
+    private  void setHome(float x, int typ)
+    {
         loadTexture(typs[typ].fileName);
         isLong = typs[typ].isLong;
         isHight = typs[typ].isHeight;
@@ -46,7 +51,8 @@ public class Home extends BaseActor {
     }
 
     @Override
-    public void act(float dt) {
+    public void act(float dt)
+    {
         super.act(dt);
 
         setX(getX() - dt * getSpeed());
@@ -56,16 +62,17 @@ public class Home extends BaseActor {
         }
     }
 
-    class Props {
+    class Props
+    {
         boolean isLong;
         boolean isHeight;
         String fileName;
 
-        public Props(boolean isLong, boolean isHeight, String fileName) {
+        Props(boolean isLong, boolean isHeight, String fileName)
+        {
             this.isLong = isLong;
             this.isHeight = isHeight;
             this.fileName = fileName;
         }
-        
     }
 }
