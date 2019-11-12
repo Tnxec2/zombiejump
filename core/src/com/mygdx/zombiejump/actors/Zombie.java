@@ -8,11 +8,11 @@ import com.mygdx.zombiejump.utils.Constants;
 /**
  * Zombie
  */
-public class Zombie extends BaseActor {
+public class Zombie extends BaseActor
+{
 
-    
-
-    public Zombie(float x, float y, Stage s) {
+    public Zombie(float x, float y, Stage s)
+    {
         super(x, y, s);
 
         loadAnimationFromSheet( Constants.ZOMBIE_TEXTURES_FILENAME[ MathUtils.random(Constants.ZOMBIE_TEXTURES_FILENAME.length-1) ], 2, 5, 0.1f, true);
@@ -22,10 +22,12 @@ public class Zombie extends BaseActor {
     }
 
     @Override
-    public void act(float dt) {
+    public void act(float dt)
+    {
         super.act(dt);
 
         applyPhsysic(dt);
+
         if ( getX() + getWidth() < 0 ) remove();
     }
    

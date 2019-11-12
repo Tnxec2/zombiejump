@@ -8,9 +8,11 @@ import com.mygdx.zombiejump.utils.Constants;
 /**
  * Shoot
  */
-public class Shot extends BaseActor {
+public class Shot extends BaseActor
+{
 
-    public Shot(float x, float y, Stage s) {
+    public Shot(float x, float y, Stage s)
+    {
         super(x, y, s);
 
         loadTexture(Constants.TEXTURE_SHOT);
@@ -21,18 +23,21 @@ public class Shot extends BaseActor {
     }
 
     @Override
-    public void act(float dt) {
+    public void act(float dt)
+    {
         super.act(dt);
 
         if ( isOutOfWorld() ) setVisible(false);
         if ( isVisible() ) applyPhsysic(dt);
     }
 
-    public void  hide() {
+    public void  hide()
+    {
         this.setVisible(false); 
     }
 
-    public void show() {
+    public void show()
+    {
         this.setVisible(true);
     }
 }

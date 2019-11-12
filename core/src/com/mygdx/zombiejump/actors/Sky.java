@@ -7,9 +7,11 @@ import com.mygdx.zombiejump.utils.Constants;
 /**
  * Sky
  */
-public class Sky extends BaseActor {
+public class Sky extends BaseActor
+{
 
-    public Sky(float x, float y, Stage s) {
+    public Sky(float x, float y, Stage s)
+    {
         super(x, y, s);
         loadTexture(Constants.TEXTURE_SKY);
 
@@ -18,7 +20,8 @@ public class Sky extends BaseActor {
     }
 
     @Override
-    public void act(float dt) {
+    public void act(float dt)
+    {
         super.act(dt);
 
         applyPhsysic(dt);

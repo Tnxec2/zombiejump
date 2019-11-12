@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 /**
  * Constants
  */
-public class Constants {
+public class Constants
+{
     public static final String GAME_TITLE = "Zombie Jump";
     public static final int GAME_WINDOW_WIDTH = 800;
     public static final int GAME_WINDOW_HEIGHT = 480;
@@ -15,6 +16,7 @@ public class Constants {
     public static final int HERO_SPEED_JUMP = 400;
     public static final int HERO_SPEED_MAX = 700;
     public static final int HERO_SPEED_WALK = 50;
+    public static final int HERO_MAX_HEALTH = 3;
     
     public static final int SCROLL_SPEED_SKY = 30;
     public static final int SCROLL_SPEED_GROUND = 200;

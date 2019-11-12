@@ -26,7 +26,7 @@ public class BaseUI {
         FreeTypeFontGenerator fontGenerator = 
             new FreeTypeFontGenerator(Gdx.files.internal(Constants.UI_TFT_FONT));
         FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
-        fontParameters.size = 48;
+        fontParameters.size = 42;
         fontParameters.color = Color.WHITE;
         fontParameters.borderWidth = 2;
         fontParameters.borderColor = Color.BLACK;

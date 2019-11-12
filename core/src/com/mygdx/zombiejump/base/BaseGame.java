@@ -28,6 +28,7 @@ public abstract class BaseGame extends Game {
      */
     @Override
     public void create() {
+        BaseUI.loadAssets();
         // prepare for multiple classes/stages/actors to receive discrete input
         InputMultiplexer im = new InputMultiplexer();
         Gdx.input.setInputProcessor( im );

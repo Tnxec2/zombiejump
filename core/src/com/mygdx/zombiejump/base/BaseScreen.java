@@ -152,7 +152,6 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     }
 
     private void setUpTouchControlAreas() {
-        touchPoint = new Vector3();
         screenLeftSide = new Rectangle(0, 0, mainStage.getCamera().viewportWidth / 2,
         mainStage.getCamera().viewportHeight);
         screenRightSide = new Rectangle(mainStage.getCamera().viewportWidth / 2, 0,

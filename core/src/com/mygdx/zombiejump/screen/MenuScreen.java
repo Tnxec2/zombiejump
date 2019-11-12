@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mygdx.zombiejump.Zombiejump;
+import com.mygdx.zombiejump.ZombieJump;
 import com.mygdx.zombiejump.base.BaseActor;
 import com.mygdx.zombiejump.base.BaseScreen;
 import com.mygdx.zombiejump.base.BaseUI;
@@ -18,12 +18,14 @@ import com.mygdx.zombiejump.utils.Constants;
 /**
  * 
  */
-public class MenuScreen extends BaseScreen {
+public class MenuScreen extends BaseScreen
+{
 
-    Label toggleMusic, toggleSound;
+    private Label toggleMusic, toggleSound;
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
         BaseActor wall = new BaseActor(0, 0, mainStage);
         wall.loadTexture(Constants.TEXTURE_MENU_SCREEN_BACKGROUND);
         wall.setSize(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT);
@@ -33,50 +35,60 @@ public class MenuScreen extends BaseScreen {
         title.centerAtActor(wall);
         title.moveBy(0, 100);
 
-        toggleMusic = new Label( Zombiejump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) , BaseUI.labelStyle);
+        toggleMusic = new Label( ZombieJump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) , BaseUI.labelStyle);
         toggleMusic.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
-        toggleMusic.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        toggleMusic.addListener(new InputListener()
+        {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 AudioUtils.getInstance().toggleMusic();
-                toggleMusic.setText(Zombiejump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) );
+                toggleMusic.setText(ZombieJump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) );
                 return false;
             }
         });
 
-        toggleSound = new Label( Zombiejump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) , BaseUI.labelStyle);
+        toggleSound = new Label( ZombieJump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) , BaseUI.labelStyle);
         toggleSound.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
-        toggleSound.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        toggleSound.addListener(new InputListener()
+        {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 AudioUtils.getInstance().toggleSound();
-                toggleSound.setText(Zombiejump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) );
+                toggleSound.setText(ZombieJump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) );
                 return false;
             }
         });
 
-        TextButton startButton = new TextButton( Zombiejump.myBundle.format("startJump"), BaseUI.textButtonStyle);
+        TextButton startButton = new TextButton( ZombieJump.myBundle.format("startJump"), BaseUI.textButtonStyle);
 
-        startButton.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        startButton.addListener(new InputListener()
+        {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 newGame();
                 return false;
             }
 
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
                 //
             }
         });
 
-        TextButton quitButton = new TextButton(Zombiejump.myBundle.format("quit"), BaseUI.textButtonStyle);
+        TextButton quitButton = new TextButton(ZombieJump.myBundle.format("quit"), BaseUI.textButtonStyle);
 
-        quitButton.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        quitButton.addListener(new InputListener()
+        {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 quitGame();
                 return false;
             }
 
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
                 //
             }
         });
@@ -88,24 +100,14 @@ public class MenuScreen extends BaseScreen {
         uiTable.add(title).colspan(2).expandY();
         uiTable.row();
 
-        Label tutorialLeft = new Label(Zombiejump.myBundle.format("tutorial1"), BaseUI.labelStyle);
-        tutorialLeft.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
-        Label tutorialRight = new Label(Zombiejump.myBundle.format("tutorial2"), BaseUI.labelStyle);
-        tutorialRight.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
-
-        uiTable.add(tutorialLeft).colspan(2);
-        uiTable.row();
-        uiTable.add(tutorialRight).colspan(2);
-
-        uiTable.row();
         uiTable.add(startButton).expand();
         uiTable.add(quitButton).expand();
 
-
         Preferences prefs = Gdx.app.getPreferences(Constants.PREFS_NAME);
         int coinsHighScore = prefs.getInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, 0);
-        if ( coinsHighScore != 0) {
-            Label highScoreLaben = new Label(Zombiejump.myBundle.format("highScore", coinsHighScore), BaseUI.labelStyle);
+        if ( coinsHighScore > 0)
+        {
+            Label highScoreLaben = new Label(ZombieJump.myBundle.format("highScore", coinsHighScore), BaseUI.labelStyle);
             highScoreLaben.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
             uiTable.row();
             uiTable.add(highScoreLaben).colspan(2);
@@ -113,13 +115,15 @@ public class MenuScreen extends BaseScreen {
     }
 
     @Override
-    public void update(float dt) {
+    public void update(float dt)
+    {
         if (Gdx.input.isKeyPressed(Keys.S))
             newGame();
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keycode)
+    {
         if ( Gdx.input.isKeyPressed(Keys.ENTER)) 
             newGame();
         if ( Gdx.input.isKeyPressed(Keys.ESCAPE))
@@ -127,11 +131,13 @@ public class MenuScreen extends BaseScreen {
         return false;
     }
 
-    private void newGame() {
-        Zombiejump.setActiveScreen(new LevelScreen());
+    private void newGame()
+    {
+        ZombieJump.setActiveScreen(new LevelScreen());
     }
 
-    private void quitGame() {
+    private void quitGame()
+    {
         Gdx.app.exit();
     }
     
