@@ -49,15 +49,13 @@ public class Constants
     public static final String TEXTURE_SKY = "sky2.png";
     public static final String TEXTURE_HERO_RUNNING = "angryhero.png";
 
-    public static final String[] ZOMBIE_TEXTURES_FILENAME = { "male-zombie.png", "female-zombie.png"};
+    public static final String[] ZOMBIE_TEXTURES_FILENAME = { "zombie.png" };
 
     
     /*
     * UI Section
     */
     public static final String UI_TFT_FONT = "SpriteGraffiti-Regular.ttf";
-    //public static final String UI_TFT_FONT = "OpenSans.ttf";
-    //public static final String UI_TFT_FONT = "softsugarplain.ttf";
     public static final String UI_BUTTON_TEXTURE = "button.png";
     public static final Color UI_TEXT_COLOR_DEFAULT = Color.GOLD;
     public static final Color UI_TEXT_COLOR_ZOMBIE = Color.CYAN;
