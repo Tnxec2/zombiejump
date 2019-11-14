@@ -57,6 +57,8 @@ public class LevelScreen extends BaseScreen {
     private float shotTime;
 
     private float coinTimer;
+
+    private boolean touchfeld;
   
     
     public LevelScreen(MyGame game) {
@@ -65,6 +67,7 @@ public class LevelScreen extends BaseScreen {
 
 	@Override
     public void initialize() {
+        touchfeld = false;
 
         game.zombieCount = 0;
         game.health = Constants.HERO_MAX_HEALTH;
@@ -317,7 +320,7 @@ public class LevelScreen extends BaseScreen {
         {
             newGame();
         } else {
-            doJump();
+            if ( ! touchfeld ) doJump();
         }
 
         return super.touchDown(screenX, screenY, pointer, button);
@@ -381,6 +384,7 @@ public class LevelScreen extends BaseScreen {
 
 
     private void setupTouchfield() {
+        touchfeld = true;
         Texture touchTexture = new Texture(Gdx.files.internal("touchpoint.png"));
         Texture touchTexturePressed = new Texture(Gdx.files.internal("touchpoint-pressed.png"));
         ImageButton jumpButton = new ImageButton(
