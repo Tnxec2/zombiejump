@@ -6,17 +6,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.zombiejump.base.BaseGame;
-import com.mygdx.zombiejump.base.BaseUI;
 import com.mygdx.zombiejump.screen.MenuScreen;
 import com.mygdx.zombiejump.utils.AudioUtils;
 
-public class ZombieJump extends BaseGame
+public class MyGame extends BaseGame
 {
 
-    public static int health;
-    public static int coinsCount;
-    public static int zombieCount;
-    public static I18NBundle myBundle;
+    public int health;
+    public int coinsCount;
+    public int zombieCount;
+    public I18NBundle myBundle;
 
     @Override
     public void create()
@@ -30,7 +29,7 @@ public class ZombieJump extends BaseGame
 
         AudioUtils.getInstance().init();
 
-        setActiveScreen(new MenuScreen());
+        setActiveScreen(new MenuScreen(this));
     }
 
     @Override

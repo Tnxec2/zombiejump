@@ -1,9 +1,8 @@
 package com.mygdx.zombiejump.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.zombiejump.ZombieJump;
+import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.actors.Coin;
 import com.mygdx.zombiejump.actors.Hero;
 import com.mygdx.zombiejump.actors.Home;
@@ -60,12 +59,16 @@ public class LevelScreen extends BaseScreen {
     private float coinTimer;
   
     
-    @Override
+    public LevelScreen(MyGame game) {
+        super(game);
+	}
+
+	@Override
     public void initialize() {
 
-        ZombieJump.zombieCount = 0;
-        ZombieJump.health = Constants.HERO_MAX_HEALTH;
-        ZombieJump.coinsCount = 0;
+        game.zombieCount = 0;
+        game.health = Constants.HERO_MAX_HEALTH;
+        game.coinsCount = 0;
 
         gameOver = false;
         shotTime = Constants.SHOT_RELOAD_INTERVAL;
@@ -100,13 +103,13 @@ public class LevelScreen extends BaseScreen {
         BaseActor coinIcon = new BaseActor(0,0,uiStage);
         coinIcon.loadTexture(Constants.TEXTURE_ICON_COIN);
 
-        zombieLabel = new Label(" x " + ZombieJump.zombieCount, BaseUI.labelStyle);
+        zombieLabel = new Label(" x " + game.zombieCount, BaseUI.labelStyle);
         zombieLabel.setColor(Constants.UI_TEXT_COLOR_ZOMBIE);
 
-        healthLabel = new Label(" x " + ZombieJump.health, BaseUI.labelStyle);
+        healthLabel = new Label(" x " + game.health, BaseUI.labelStyle);
         healthLabel.setColor(Constants.UI_TEXT_COLOR_HEALTH);
 
-        coinLabel  = new Label(" x " + ZombieJump.coinsCount,  BaseUI.labelStyle);
+        coinLabel  = new Label(" x " + game.coinsCount,  BaseUI.labelStyle);
         coinLabel.setColor(Constants.UI_TEXT_COLOR_COIN);
 
         /*
@@ -119,38 +122,13 @@ public class LevelScreen extends BaseScreen {
         dialogBox.setVisible(false);
         */
 
-        nachladeLabel = new Label(ZombieJump.myBundle.format("reloadIn", 0), BaseUI.labelStyle);
+        nachladeLabel = new Label(game.myBundle.format("reloadIn", 0), BaseUI.labelStyle);
         nachladeLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
-        Texture touchTexture = new Texture(Gdx.files.internal("touchpoint.png"));
-        Texture touchTexturePressed = new Texture(Gdx.files.internal("touchpoint-pressed.png"));
-        ImageButton jumpButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(touchTexture)),
-                new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
-        );
-        jumpButton.setPosition(10, 10);
-        uiStage.addActor(jumpButton);
-
-        jumpButton.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                doJump();
-                return false;
-            }
-        });
-
-        ImageButton shotButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(touchTexture)),
-                new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
-        );
-        shotButton.setPosition(Constants.GAME_WINDOW_WIDTH-shotButton.getWidth()-10 , 10);
-        uiStage.addActor(shotButton);
-
-        shotButton.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                doShot();
-                return false;
-            }
-        });
+        if(Gdx.app.getType() == ApplicationType.iOS || Gdx.app.getType() == ApplicationType.Android) {
+            //Do awesome stuff for iOS here
+            setupTouchfield();
+        }
 
         uiTable.pad(20);
         uiTable.add(zombieIcon).right();
@@ -192,8 +170,8 @@ public class LevelScreen extends BaseScreen {
             {
                 AudioUtils.getInstance().playSparkleSound();
                 coinActor.remove();
-                ZombieJump.coinsCount++;
-                coinLabel.setText(" x " + ZombieJump.coinsCount );
+                game.coinsCount++;
+                coinLabel.setText(" x " + game.coinsCount );
             }
         }
 
@@ -203,7 +181,7 @@ public class LevelScreen extends BaseScreen {
             {
                 zombieActor.remove();
                 shot.hide();
-                ZombieJump.zombieCount++;
+                game.zombieCount++;
                 continue;
             }
 
@@ -247,7 +225,7 @@ public class LevelScreen extends BaseScreen {
         if (Constants.GAME_WINDOW_WIDTH - (lastHome.getX() + lastHome.getWidth()) > spawnWidthHome)
             spawnHome();
 
-        zombieLabel.setText(" x " + ZombieJump.zombieCount);
+        zombieLabel.setText(" x " + game.zombieCount);
 
         if ( shotTime < Constants.SHOT_RELOAD_INTERVAL ) shotTime += delta;
 
@@ -255,13 +233,13 @@ public class LevelScreen extends BaseScreen {
         {
             if (shotTime < Constants.SHOT_RELOAD_INTERVAL )
             {
-                nachladeLabel.setText(ZombieJump.myBundle.format("reloadIn", MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime)) );
+                nachladeLabel.setText(game.myBundle.format("reloadIn", MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime)) );
             } else
                 {
                 if ( ! reloadShot )
                 {
                     reloadShot = true;
-                    nachladeLabel.setText(ZombieJump.myBundle.format("readyToShot"));
+                    nachladeLabel.setText(game.myBundle.format("readyToShot"));
                     AudioUtils.getInstance().playReloadSound();
                 }
             }
@@ -277,12 +255,12 @@ public class LevelScreen extends BaseScreen {
     private void zombieHit(BaseActor zombie)
     {
         zombie.remove();
-        ZombieJump.health--;
-        healthLabel.setText(" x " + ZombieJump.health);
+        game.health--;
+        healthLabel.setText(" x " + game.health);
         shot.hide();
         AudioUtils.getInstance().playHitSound();
 
-        if ( ZombieJump.health <= 0 )
+        if ( game.health <= 0 )
         {
             gameOver();
         }
@@ -338,6 +316,8 @@ public class LevelScreen extends BaseScreen {
         if (gameOver)
         {
             newGame();
+        } else {
+            doJump();
         }
 
         return super.touchDown(screenX, screenY, pointer, button);
@@ -371,7 +351,7 @@ public class LevelScreen extends BaseScreen {
 
     private void newGame()
     {
-        BaseGame.setActiveScreen(new GameOverScreen());
+        BaseGame.setActiveScreen(new GameOverScreen(game));
     }
 
     private void doJump()
@@ -381,6 +361,7 @@ public class LevelScreen extends BaseScreen {
 
     private void doShot()
     {
+        if ( gameOver ) return;
 
         if ( shotTime < Constants.SHOT_RELOAD_INTERVAL || shot.isVisible() )
         {
@@ -399,5 +380,35 @@ public class LevelScreen extends BaseScreen {
     }
 
 
-    
+    private void setupTouchfield() {
+        Texture touchTexture = new Texture(Gdx.files.internal("touchpoint.png"));
+        Texture touchTexturePressed = new Texture(Gdx.files.internal("touchpoint-pressed.png"));
+        ImageButton jumpButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(touchTexture)),
+                new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
+        );
+        jumpButton.setPosition(10, 10);
+        uiStage.addActor(jumpButton);
+
+        jumpButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                doJump();
+                return false;
+            }
+        });
+
+        ImageButton shotButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(touchTexture)),
+                new TextureRegionDrawable(new TextureRegion(touchTexturePressed))
+        );
+        shotButton.setPosition(Constants.GAME_WINDOW_WIDTH-shotButton.getWidth()-10 , 10);
+        uiStage.addActor(shotButton);
+
+        shotButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                doShot();
+                return false;
+            }
+        });
+    }
 }

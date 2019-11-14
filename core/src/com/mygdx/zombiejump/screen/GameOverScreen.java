@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygdx.zombiejump.ZombieJump;
+import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.base.BaseActor;
 import com.mygdx.zombiejump.base.BaseScreen;
 import com.mygdx.zombiejump.base.BaseUI;
@@ -16,7 +16,11 @@ import com.mygdx.zombiejump.utils.Constants;
 public class GameOverScreen extends BaseScreen
 {
     
-    @Override
+    public GameOverScreen(MyGame game) {
+        super(game);
+	}
+
+	@Override
     public void initialize()
     {
         BaseActor wall = new BaseActor(0, 0, mainStage);
@@ -34,17 +38,17 @@ public class GameOverScreen extends BaseScreen
         BaseActor coinIcon = new BaseActor(0, 0, uiStage);
         coinIcon.loadTexture(Constants.TEXTURE_ICON_COIN);
 
-        Label zombieLabel = new Label(" x " + ZombieJump.zombieCount, BaseUI.labelStyle);
+        Label zombieLabel = new Label(" x " + game.zombieCount, BaseUI.labelStyle);
         zombieLabel.setColor(Constants.UI_TEXT_COLOR_ZOMBIE);
 
-        Label coinLabel = new Label(" x " + ZombieJump.coinsCount, BaseUI.labelStyle);
+        Label coinLabel = new Label(" x " + game.coinsCount, BaseUI.labelStyle);
         coinLabel.setColor(Constants.UI_TEXT_COLOR_COIN);
         
-        Label highScoreLabel = new Label(ZombieJump.myBundle.format("newHighScore"), BaseUI.labelStyle);
+        Label highScoreLabel = new Label(game.myBundle.format("newHighScore"), BaseUI.labelStyle);
         highScoreLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
         highScoreLabel.setVisible(false);
 
-        Label message = new Label(ZombieJump.myBundle.format("touchToRestart"), BaseUI.labelStyle);
+        Label message = new Label(game.myBundle.format("touchToRestart"), BaseUI.labelStyle);
         message.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
         uiTable.pad(20);
@@ -63,9 +67,9 @@ public class GameOverScreen extends BaseScreen
         Preferences prefs = Gdx.app.getPreferences(Constants.PREFS_NAME);
         int coinsHighScore = prefs.getInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, 0);
 
-        if ( ZombieJump.coinsCount > coinsHighScore )
+        if ( game.coinsCount > coinsHighScore )
         {
-            prefs.putInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, ZombieJump.coinsCount);
+            prefs.putInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, game.coinsCount);
             prefs.flush();
             highScoreLabel.setVisible(true);
         }
@@ -77,7 +81,7 @@ public class GameOverScreen extends BaseScreen
         if (Gdx.input.isKeyPressed(Keys.ESCAPE))
             Gdx.app.exit();
         else
-            ZombieJump.setActiveScreen(new MenuScreen());
+            newGame();
         return false;
     }
 
@@ -91,9 +95,13 @@ public class GameOverScreen extends BaseScreen
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
         
-        ZombieJump.setActiveScreen(new MenuScreen());
+        newGame();
 
         return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    private void newGame() {
+        MyGame.setActiveScreen(new MenuScreen(game));
     }
     
 }

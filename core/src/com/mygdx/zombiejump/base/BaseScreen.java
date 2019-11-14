@@ -11,9 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.utils.Constants;
 
 public abstract class BaseScreen implements Screen, InputProcessor {
+
+    protected MyGame game;
 
     protected Stage mainStage;
     protected Stage uiStage;
@@ -22,7 +25,9 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
 
-    public BaseScreen() {
+    public BaseScreen(MyGame game) {
+        this.game = game;
+
         mainStage = new Stage(new ScalingViewport(Scaling.stretch, Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT,
                 new OrthographicCamera(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT)));
         uiStage = new Stage(new ScalingViewport(Scaling.stretch, Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT,

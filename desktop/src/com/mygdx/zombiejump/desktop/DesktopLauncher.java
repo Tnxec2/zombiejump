@@ -2,7 +2,7 @@ package com.mygdx.zombiejump.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.zombiejump.ZombieJump;
+import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.utils.Constants;
 
 public class DesktopLauncher
@@ -13,6 +13,6 @@ public class DesktopLauncher
 		config.title = Constants.GAME_TITLE;
 		config.width = Constants.GAME_WINDOW_WIDTH;
 		config.height = Constants.GAME_WINDOW_HEIGHT;
-		new LwjglApplication(new ZombieJump(), config);
+		new LwjglApplication(new MyGame(), config);
 	}
 }

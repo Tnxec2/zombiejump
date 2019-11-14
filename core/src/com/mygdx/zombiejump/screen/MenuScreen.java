@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mygdx.zombiejump.ZombieJump;
+import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.base.BaseActor;
 import com.mygdx.zombiejump.base.BaseScreen;
 import com.mygdx.zombiejump.base.BaseUI;
@@ -23,9 +23,14 @@ public class MenuScreen extends BaseScreen
 
     private Label toggleMusic, toggleSound;
 
-    @Override
+    public MenuScreen(MyGame zombieJump) {
+        super(zombieJump);
+	}
+    
+	@Override
     public void initialize()
     {
+
         BaseActor wall = new BaseActor(0, 0, mainStage);
         wall.loadTexture(Constants.TEXTURE_MENU_SCREEN_BACKGROUND);
         wall.setSize(Constants.GAME_WINDOW_WIDTH, Constants.GAME_WINDOW_HEIGHT);
@@ -35,7 +40,7 @@ public class MenuScreen extends BaseScreen
         title.centerAtActor(wall);
         title.moveBy(0, 100);
 
-        toggleMusic = new Label( ZombieJump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) , BaseUI.labelStyle);
+        toggleMusic = new Label( game.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) , BaseUI.labelStyle);
         toggleMusic.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
         toggleMusic.addListener(new InputListener()
@@ -43,12 +48,12 @@ public class MenuScreen extends BaseScreen
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
             {
                 AudioUtils.getInstance().toggleMusic();
-                toggleMusic.setText(ZombieJump.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) );
+                toggleMusic.setText(game.myBundle.get( AudioUtils.getInstance().getMusicRegionName() ) );
                 return false;
             }
         });
 
-        toggleSound = new Label( ZombieJump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) , BaseUI.labelStyle);
+        toggleSound = new Label( game.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) , BaseUI.labelStyle);
         toggleSound.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
 
         toggleSound.addListener(new InputListener()
@@ -56,12 +61,12 @@ public class MenuScreen extends BaseScreen
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
             {
                 AudioUtils.getInstance().toggleSound();
-                toggleSound.setText(ZombieJump.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) );
+                toggleSound.setText(game.myBundle.get( AudioUtils.getInstance().getSoundRegionName() ) );
                 return false;
             }
         });
 
-        TextButton startButton = new TextButton( ZombieJump.myBundle.format("startJump"), BaseUI.textButtonStyle);
+        TextButton startButton = new TextButton( game.myBundle.format("startJump"), BaseUI.textButtonStyle);
 
         startButton.addListener(new InputListener()
         {
@@ -77,7 +82,7 @@ public class MenuScreen extends BaseScreen
             }
         });
 
-        TextButton quitButton = new TextButton(ZombieJump.myBundle.format("quit"), BaseUI.textButtonStyle);
+        TextButton quitButton = new TextButton(game.myBundle.format("quit"), BaseUI.textButtonStyle);
 
         quitButton.addListener(new InputListener()
         {
@@ -107,7 +112,7 @@ public class MenuScreen extends BaseScreen
         int coinsHighScore = prefs.getInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, 0);
         if ( coinsHighScore > 0)
         {
-            Label highScoreLaben = new Label(ZombieJump.myBundle.format("highScore", coinsHighScore), BaseUI.labelStyle);
+            Label highScoreLaben = new Label(game.myBundle.format("highScore", coinsHighScore), BaseUI.labelStyle);
             highScoreLaben.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
             uiTable.row();
             uiTable.add(highScoreLaben).colspan(2);
@@ -133,7 +138,7 @@ public class MenuScreen extends BaseScreen
 
     private void newGame()
     {
-        ZombieJump.setActiveScreen(new LevelScreen());
+        MyGame.setActiveScreen(new LevelScreen(game));
     }
 
     private void quitGame()
