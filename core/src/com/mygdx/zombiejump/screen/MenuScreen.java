@@ -3,6 +3,7 @@ package com.mygdx.zombiejump.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -110,9 +111,10 @@ public class MenuScreen extends BaseScreen
 
         Preferences prefs = Gdx.app.getPreferences(Constants.PREFS_NAME);
         int coinsHighScore = prefs.getInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, 0);
-        if ( coinsHighScore > 0)
+        float scoreHighScore = prefs.getFloat(Constants.PREFS_NAME_SCORE_HIGHSCORE, 0);
+        if ( scoreHighScore > 0)
         {
-            Label highScoreLaben = new Label(game.myBundle.format("highScore", coinsHighScore), BaseUI.labelStyle);
+            Label highScoreLaben = new Label(game.myBundle.format("highScore", MathUtils.ceil(scoreHighScore) ), BaseUI.labelStyle);
             highScoreLaben.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
             uiTable.row();
             uiTable.add(highScoreLaben).colspan(2);

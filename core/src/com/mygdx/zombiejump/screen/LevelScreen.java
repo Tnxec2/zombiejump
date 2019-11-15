@@ -3,6 +3,7 @@ package com.mygdx.zombiejump.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -44,7 +45,7 @@ public class LevelScreen extends BaseScreen {
     private Home lastHome;
     private int spawnWidthHome;
     
-    private Label zombieLabel, nachladeLabel, healthLabel, coinLabel;
+    private Label zombieLabel, bulletLabel, healthLabel, coinLabel, scoreLabel;
     private BaseDialogBox dialogBox;
     
     private boolean gameOver;
@@ -72,6 +73,7 @@ public class LevelScreen extends BaseScreen {
         game.zombieCount = 0;
         game.health = Constants.HERO_MAX_HEALTH;
         game.coinsCount = 0;
+        game.scoreCount = 0;
 
         gameOver = false;
         shotTime = Constants.SHOT_RELOAD_INTERVAL;
@@ -105,15 +107,25 @@ public class LevelScreen extends BaseScreen {
         healthIcon.loadTexture(Constants.TEXTURE_ICON_HEALTH);
         BaseActor coinIcon = new BaseActor(0,0,uiStage);
         coinIcon.loadTexture(Constants.TEXTURE_ICON_COIN);
+        BaseActor scoreIcon = new BaseActor(0,0,uiStage);
+        scoreIcon.loadTexture(Constants.TEXTURE_ICON_SCORE);
+        BaseActor bulletIcon = new BaseActor(0,0,uiStage);
+        bulletIcon.loadTexture(Constants.TEXTURE_ICON_BULLET);
 
         zombieLabel = new Label(" x " + game.zombieCount, BaseUI.labelStyle);
         zombieLabel.setColor(Constants.UI_TEXT_COLOR_ZOMBIE);
 
-        healthLabel = new Label(" x " + game.health, BaseUI.labelStyle);
+        healthLabel = new Label("" + game.health + " x " , BaseUI.labelStyle);
         healthLabel.setColor(Constants.UI_TEXT_COLOR_HEALTH);
 
         coinLabel  = new Label(" x " + game.coinsCount,  BaseUI.labelStyle);
         coinLabel.setColor(Constants.UI_TEXT_COLOR_COIN);
+
+        scoreLabel  = new Label("" + game.scoreCount + " x ",  BaseUI.labelStyle);
+        scoreLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+
+        scoreLabel  = new Label("" + game.scoreCount + " x ",  BaseUI.labelStyle);
+        scoreLabel.setColor(Constants.UI_TEXT_COLOR_SCORE);
 
         /*
         dialogBox = new BaseDialogBox(0,0, uiStage);
@@ -125,8 +137,8 @@ public class LevelScreen extends BaseScreen {
         dialogBox.setVisible(false);
         */
 
-        nachladeLabel = new Label(game.myBundle.format("reloadIn", 0), BaseUI.labelStyle);
-        nachladeLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
+        bulletLabel = new Label( " x ", BaseUI.labelStyle);
+        bulletLabel.setColor(Color.RED);
 
         if(Gdx.app.getType() == ApplicationType.iOS || Gdx.app.getType() == ApplicationType.Android) {
             //Do awesome stuff for iOS here
@@ -140,10 +152,13 @@ public class LevelScreen extends BaseScreen {
         uiTable.add(coinIcon);
         uiTable.add(coinLabel);
         uiTable.add().expandX();
-        uiTable.add(healthIcon).right();
-        uiTable.add(healthLabel).left();
+        uiTable.add(healthLabel).right().expandX();
+        uiTable.add(healthIcon).left();
         uiTable.row();
-        uiTable.add(nachladeLabel).colspan(8).top().left();
+        uiTable.add(bulletIcon).right();
+        uiTable.add(bulletLabel).left();
+        uiTable.add(scoreLabel).right().colspan(5).expandX();
+        uiTable.add(scoreIcon).left();
         uiTable.row();
         uiTable.add().colspan(8).expand();
 
@@ -236,17 +251,23 @@ public class LevelScreen extends BaseScreen {
         {
             if (shotTime < Constants.SHOT_RELOAD_INTERVAL )
             {
-                nachladeLabel.setText(game.myBundle.format("reloadIn", MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime)) );
+                bulletLabel.setText(" x " + MathUtils.round( Constants.SHOT_RELOAD_INTERVAL - shotTime));
+                bulletLabel.setColor(Constants.UI_TEXT_COLOR_BULLET_FALSE);
             } else
-                {
+            {
                 if ( ! reloadShot )
                 {
                     reloadShot = true;
-                    nachladeLabel.setText(game.myBundle.format("readyToShot"));
+                    bulletLabel.setText("OK");
+                    bulletLabel.setColor(Constants.UI_TEXT_COLOR_BULLET_OK);
                     AudioUtils.getInstance().playReloadSound();
                 }
             }
-        } 
+        }
+
+        game.scoreCount += delta * Constants.SCROLL_SPEED_GROUND / 50;
+
+        scoreLabel.setText( MathUtils.ceil(game.scoreCount) + " x ");
 
     }
 
@@ -303,7 +324,7 @@ public class LevelScreen extends BaseScreen {
         sky2.setSpeed(0);
         hero.remove();
         shot.remove();
-        nachladeLabel.remove();
+        bulletLabel.remove();
         BaseActor gameOverMessage = new BaseActor(0, 0, uiStage);
         gameOverMessage.loadTexture(Constants.TEXTURE_GAME_OVER);
         gameOverMessage.centerAtPosition(Constants.GAME_WINDOW_WIDTH / 2, 

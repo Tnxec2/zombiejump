@@ -23,9 +23,10 @@ public class Constants
     public static final int SCROLL_SPEED_ZOMBIE = 230;
     
     public static final float SHOT_RELOAD_INTERVAL = 4f;
-    public static final float COIN_SPAWN_INTERVAL = 4f;
+    public static final float COIN_SPAWN_INTERVAL = 2f;
     
     public static final String PREFS_NAME = "ZombieJumpPrefs";
+    public static final String PREFS_NAME_SCORE_HIGHSCORE = "scoreHighScore";
     public static final String PREFS_NAME_COINS_HIGHSCORE = "coinsHighScore";
     
     /*
@@ -40,6 +41,8 @@ public class Constants
     public static final String TEXTURE_ICON_ZOMBIE = "zombie-icon.png";
     public static final String TEXTURE_ICON_HEALTH = "heart-icon.png";
     public static final String TEXTURE_ICON_COIN = "coin-icon.png";
+    public static final String TEXTURE_ICON_BULLET = "bullet-icon.png";
+    public static final String TEXTURE_ICON_SCORE = "score-icon.png";
     
     public static final String TEXTURE_COIN = "coin.png";
     public static final String TEXTURE_SHOT = "shot.png";
@@ -61,6 +64,9 @@ public class Constants
     public static final Color UI_TEXT_COLOR_ZOMBIE = Color.CYAN;
     public static final Color UI_TEXT_COLOR_COIN = Color.GOLD;
     public static final Color UI_TEXT_COLOR_HEALTH = Color.RED;
+    public static final Color UI_TEXT_COLOR_BULLET_FALSE = Color.RED;
+    public static final Color UI_TEXT_COLOR_BULLET_OK = Color.GREEN;
+    public static final Color UI_TEXT_COLOR_SCORE = Color.YELLOW;
     
     /*
     *   Audio

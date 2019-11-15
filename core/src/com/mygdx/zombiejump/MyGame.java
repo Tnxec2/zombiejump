@@ -15,6 +15,8 @@ public class MyGame extends BaseGame
     public int health;
     public int coinsCount;
     public int zombieCount;
+    public float scoreCount;
+
     public I18NBundle myBundle;
 
     @Override

@@ -3,6 +3,7 @@ package com.mygdx.zombiejump.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.zombiejump.MyGame;
 import com.mygdx.zombiejump.base.BaseActor;
@@ -38,11 +39,17 @@ public class GameOverScreen extends BaseScreen
         BaseActor coinIcon = new BaseActor(0, 0, uiStage);
         coinIcon.loadTexture(Constants.TEXTURE_ICON_COIN);
 
+        BaseActor scoreIcon = new BaseActor(0, 0, uiStage);
+        scoreIcon.loadTexture(Constants.TEXTURE_ICON_SCORE);
+
         Label zombieLabel = new Label(" x " + game.zombieCount, BaseUI.labelStyle);
         zombieLabel.setColor(Constants.UI_TEXT_COLOR_ZOMBIE);
 
         Label coinLabel = new Label(" x " + game.coinsCount, BaseUI.labelStyle);
         coinLabel.setColor(Constants.UI_TEXT_COLOR_COIN);
+
+        Label scoreLabel = new Label(" x " + MathUtils.ceil(game.scoreCount), BaseUI.labelStyle);
+        scoreLabel.setColor(Constants.UI_TEXT_COLOR_SCORE);
         
         Label highScoreLabel = new Label(game.myBundle.format("newHighScore"), BaseUI.labelStyle);
         highScoreLabel.setColor(Constants.UI_TEXT_COLOR_DEFAULT);
@@ -60,16 +67,26 @@ public class GameOverScreen extends BaseScreen
         uiTable.add(coinIcon).right();
         uiTable.add(coinLabel).left();
         uiTable.row();
+        uiTable.add(scoreIcon).right();
+        uiTable.add(scoreLabel).left();
+        uiTable.row();
         uiTable.add(highScoreLabel).colspan(2);
         uiTable.row();
         uiTable.add(message).colspan(2).expandY();
 
         Preferences prefs = Gdx.app.getPreferences(Constants.PREFS_NAME);
         int coinsHighScore = prefs.getInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, 0);
+        float scoreHighScore = prefs.getFloat(Constants.PREFS_NAME_SCORE_HIGHSCORE, 0);
 
         if ( game.coinsCount > coinsHighScore )
         {
             prefs.putInteger(Constants.PREFS_NAME_COINS_HIGHSCORE, game.coinsCount);
+            prefs.flush();
+            //highScoreLabel.setVisible(true);
+        }
+        if ( game.scoreCount > scoreHighScore )
+        {
+            prefs.putFloat(Constants.PREFS_NAME_SCORE_HIGHSCORE,  game.scoreCount);
             prefs.flush();
             highScoreLabel.setVisible(true);
         }
