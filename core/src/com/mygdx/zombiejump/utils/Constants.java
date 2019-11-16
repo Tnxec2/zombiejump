@@ -77,8 +77,8 @@ public class Constants
 	public static final String AUDIO_SHOTGUN_SOUND = "audio/shotgun.wav";
 	public static final String AUDIO_DRYFIRE_SOUND = "audio/dryfire.wav";
 	public static final String AUDIO_RELOAD_SOUND = "audio/reload.wav";
-    public static final String AUDIO_SPARKLE_SOUND = "audio/sparkle.ogg";
-    
+    public static final String AUDIO_COLLECTCOIN_SOUND = "audio/collectcoin.wav";
+
     public static final String SOUND_ON_REGION_NAME = "sound_on";
     public static final String SOUND_OFF_REGION_NAME = "sound_off";
     public static final String MUSIC_ON_REGION_NAME = "music_on";

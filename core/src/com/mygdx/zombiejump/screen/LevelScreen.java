@@ -280,7 +280,7 @@ public class LevelScreen extends BaseScreen {
     {
         zombie.remove();
         game.health--;
-        healthLabel.setText(" x " + game.health);
+        healthLabel.setText(game.health + " x ");
         shot.hide();
         AudioUtils.getInstance().playHitSound();
 

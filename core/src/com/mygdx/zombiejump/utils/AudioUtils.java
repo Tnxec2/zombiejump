@@ -15,7 +15,7 @@ public class AudioUtils
     private static Sound shotgunSound;
     private static Sound dryfireSound;
     private static Sound reloadSound;
-    private static Sound sparkleSound;
+    private static Sound collectcoinSound;
 
     private static final String MUSIC_ON_PREFERENCE = "music_on";
     private static final String SOUND_ON_PREFERENCE = "sound_on";
@@ -46,7 +46,7 @@ public class AudioUtils
         shotgunSound = createSound(Constants.AUDIO_SHOTGUN_SOUND);
         dryfireSound = createSound(Constants.AUDIO_DRYFIRE_SOUND);
         reloadSound = createSound(Constants.AUDIO_RELOAD_SOUND);
-        sparkleSound = createSound(Constants.AUDIO_SPARKLE_SOUND);
+        collectcoinSound = createSound(Constants.AUDIO_COLLECTCOIN_SOUND);
     }
 
     public Sound createSound(String soundFileName)
@@ -95,7 +95,7 @@ public class AudioUtils
         shotgunSound.dispose();
         dryfireSound.dispose();
         reloadSound.dispose();
-        sparkleSound.dispose();
+        collectcoinSound.dispose();
     }
 
     public void stopMusic()
@@ -147,6 +147,6 @@ public class AudioUtils
 
     public void playSparkleSound()
     {
-        playSound(sparkleSound);
+        playSound(collectcoinSound);
     }
 }
