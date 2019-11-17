@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.zombiejump.utils.Constants;
 
 /**
  * TileMapActor
@@ -26,8 +27,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class TileMapActor extends Actor {
 
     // window dimensions
-    public static int windowWidht = 800;
-    public static int windowHeight = 600;
+    public static int windowWidht = Constants.GAME_WINDOW_WIDTH;
+    public static int windowHeight = Constants.GAME_WINDOW_HEIGHT;
 
     private TiledMap tiledMap;
     private OrthographicCamera tiledCamera;
