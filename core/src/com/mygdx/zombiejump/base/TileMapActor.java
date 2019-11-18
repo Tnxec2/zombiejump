@@ -17,7 +17,6 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.zombiejump.utils.Constants;
 
 /**
  * TileMapActor
@@ -27,8 +26,8 @@ import com.mygdx.zombiejump.utils.Constants;
 public class TileMapActor extends Actor {
 
     // window dimensions
-    public static int windowWidht = Constants.GAME_WINDOW_WIDTH;
-    public static int windowHeight = Constants.GAME_WINDOW_HEIGHT;
+    private int windowWidht;
+    private int windowHeight;
 
     private TiledMap tiledMap;
     private OrthographicCamera tiledCamera;
@@ -37,7 +36,9 @@ public class TileMapActor extends Actor {
     /*
     * Initialize Tilemap created with the Tiled Map Editor
     */
-    public TileMapActor(String fileName, Stage stage) {
+    public TileMapActor(String fileName, Stage stage, int windowWidht, int windowHeight) {
+        this.windowWidht = windowWidht;
+        this.windowHeight = windowHeight;
         // set up tile map, renderer and camera
         tiledMap = new TmxMapLoader().load(fileName);
 
@@ -176,5 +177,23 @@ public class TileMapActor extends Actor {
         }
         return list;
     }
+
+    public int getWindowWidht() {
+        return windowWidht;
+    }
+
+    public void setWindowWidht(int windowWidht) {
+        this.windowWidht = windowWidht;
+    }
+
+    public int getWindowHeight() {
+        return windowHeight;
+    }
+
+    public void setWindowHeight(int windowHeight) {
+        this.windowHeight = windowHeight;
+    }
+
+    
 
 }
