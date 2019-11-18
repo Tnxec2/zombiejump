@@ -94,6 +94,8 @@ public class BaseActor extends Group {
         // set point around which the actor should be rotated, typicaly the center of
         // the actor
         setOrigin(w / 2, h / 2);
+        // set the boudary polygon to rectangle of texture, wenn not setted
+        if ( boundaryPolygon == null) setBoundaryRectangle();
     }
 
     /**
