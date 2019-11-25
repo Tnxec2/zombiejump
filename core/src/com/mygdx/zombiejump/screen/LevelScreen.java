@@ -182,7 +182,7 @@ public class LevelScreen extends BaseScreen {
             coinTimer = 0;
         }
 
-        for (BaseActor coinActor : BaseActor.getList(mainStage, Coin.class.getName() ) ) 
+        for (BaseActor coinActor : BaseActor.getList(mainStage, Coin.class ) ) 
         {
             if (hero.overlaps(coinActor))
             {
@@ -193,7 +193,7 @@ public class LevelScreen extends BaseScreen {
             }
         }
 
-        for (BaseActor zombieActor : BaseActor.getList(mainStage, Zombie.class.getName()))
+        for (BaseActor zombieActor : BaseActor.getList(mainStage, Zombie.class))
         {
             if ( shot.isVisible() && zombieActor.overlaps(shot))
             {
@@ -217,7 +217,7 @@ public class LevelScreen extends BaseScreen {
         zombieSpawnTimer += delta;
 
         hero.setCanJump(false);
-        for (BaseActor homeActor : BaseActor.getList(mainStage, Home.class.getName()))
+        for (BaseActor homeActor : BaseActor.getList(mainStage, Home.class))
         {
 
             offset = hero.preventOverlap(homeActor);

@@ -603,15 +603,8 @@ public class BaseActor extends Group {
      *  @param className name of a class that extends the BaseActor class
      *  @return list of instances of the object in stage which extend with the given class name 
      */
-    public static ArrayList<BaseActor> getList(Stage stage, String className) {
+    public static ArrayList<BaseActor> getList(Stage stage, Class theClass) {
         ArrayList<BaseActor> list = new ArrayList<>();
-
-        Class theClass = null;
-        try {
-            theClass = Class.forName(className);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         for ( Actor a: stage.getActors()) {
             if ( theClass.isInstance(a)) 
@@ -626,9 +619,15 @@ public class BaseActor extends Group {
      *  @param className name of a class that extends the BaseActor class
      *  @return number of instances of the class
      */
-    public static int count(Stage stage, String className)
+    public static int count(Stage stage, Class theClass)
     {
-        return getList(stage, className).size();
+        int count = 0;
+
+        for ( Actor a: stage.getActors()) {
+            if ( theClass.isInstance(a)) 
+                count++;
+        }
+        return count;
     }
 
 
